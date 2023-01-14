@@ -1,0 +1,96 @@
+* {
+    /* border: 2px solid black; */
+    padding: 0%;
+}
+
+body {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)),
+        url(./imgs/WPI_Beech_Tree.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: white;
+    height: 540px;
+    width: 520px;
+    position: relative;
+    padding: 20px;
+}
+
+.locationDiv {
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 400px;
+    height: 15px;
+    margin-bottom: 20px;
+}
+
+.locationTag,
+.areaTag {
+    font-size: 11pt;
+    font-weight: 900;
+}
+
+.starsDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 434px;
+    height: 33px;
+    margin-bottom: 20px;
+}
+
+.userStars {
+    width: 200px;
+}
+
+.starSeperator {
+    border-left: 2px solid black;
+    height: 25px;
+}
+
+.averageStars {
+    width: 200px;
+}
+
+.textDiv {
+    width: 370px;
+    height: 135px;
+    margin-bottom: 20px;
+}
+
+.textEntry {
+    font-family: "Raleway", sans-serif;
+    font-size: 11pt;
+    height: inherit;
+    width: inherit;
+    white-space: normal;
+    word-break: break-word;
+    word-wrap: normal;
+}
+
+.imageDiv {
+    width: 480px;
+    height: 270px;
+}
+
+.image {
+    width: inherit;
+    height: inherit;
+    object-fit: fill;
+}
