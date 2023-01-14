@@ -37,13 +37,9 @@ body {
   font-size: 2em;
 }
 
-.links a::hover {
-  display: flex;
-  gap: 2em;
-  font-family: 'Roboto', sans-serif;
-  text-decoration: none;
+.links a:hover {
   color: white;
-  font-size: 2em;
+  text-decoration: underline;
 }
 
 .content {
