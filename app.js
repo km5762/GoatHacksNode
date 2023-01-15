@@ -10,6 +10,7 @@ const multer = require("multer");
 const port = 3000;
 const password = fs.readFileSync("./.env.txt", "utf-8").toString();
 const { MongoClient } = require("mongodb");
+
 var spotstList;
 const uploadBaseUrl = `127.0.0.1:${port}/`;
 

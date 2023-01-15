@@ -1,12 +1,15 @@
 <div class="card">
     <div class="locationDiv">
-        <span class="locationTag">Location: <span class="bold"><%= spot.location %></span></span>
-        <span class="areaTag">Area: <span class="bold"><%= spot.area %></span></span>
+        <span class="locationTag">Location: <span><%= spot.location %></span></span>
+        <span class="areaTag">Area: <span><%= spot.area %></span></span>
     </div>
     <div class="starsDiv">
+        <%for (var i = 0; i < Math.floor(spot.rating); i++) {%>
+        <img src='/public/imgs/6586099_bookmark_favorite_rating_star_icon.svg'>
+        <%}%>
     </div>
     <div class="textDiv">
-        <p class="textEntry"><%= spot.description %></p>
+        <p class="textEntry" style="font-style: italic;"><%= spot.description %></p>
     </div>
     <div class="imageDiv">
         <img class="image" src='data:image/jpeg;base64,<%= spot.img %>'>
