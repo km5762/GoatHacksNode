@@ -90,6 +90,10 @@ body {
     height: 270px;
 }
 
+.bold {
+    font-weight: bolder;
+}
+
 .image {
     width: inherit;
     height: inherit;

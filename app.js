@@ -5,43 +5,28 @@ const fs = require('fs');
 const ejs = require('ejs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const multer = require("multer");
 const port = 3000;
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.set('view engine', 'ejs');
-
-//serve static pages. index and upload will stay as is. spots will be dynamic from server
 const password = fs.readFileSync("./.env.txt", "utf-8").toString();
+const { MongoClient } = require("mongodb");
+var spotstList;
+
+app.set('views', './views');
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 // connect to mongoosedb
-const { MongoClient } = require("mongodb");
-const uri = `mongodb+srv://sampleGoat:${password}@cluster0.6vhvr.mongodb.net/?retryWrites=true&w=majority`;
-const client = new MongoClient(uri);
+const url = `mongodb+srv://sampleGoat:${password}@cluster0.6vhvr.mongodb.net/?retryWrites=true&w=majority`;
 
-async function queryAll() {
-  try {
-    const database = client.db('spotsDB');
-    const studyspots = database.collection('studyspots');
-    const query = { };
-    const spot = await studyspots.find(query).toArray();
-    console.log(spot);
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-queryAll().catch(console.dir);
-
-const schema = {
-  location: String,
-  area: String,
-  rating: Number,
-  description: String,
-  img: String
-}
-
-const Note = mongoose.model("Note", schema);
-const Spot = mongoose.model("studyspots", schema);
+const schema = new mongoose.Schema({
+  location: {type: String},
+  area: {type: String},
+  rating: {type: Number},
+  description: {type: String},
+  img: {type: String},
+});
 
 app.use('/public', express.static('public'));
 
@@ -54,11 +39,17 @@ app.get('/upload.html', (request, response) => {
 })
 
 app.get('/views/spots.ejs', (request, response) => {
-  Spot.find({}, function(err, spots) {
-    response.render('spots', {
-      spotsList: spots
-    })
-  })
+  MongoClient.connect(url, function(err, db) {
+      if (err) throw err;
+      var dbo = db.db("spotsDB");
+      var query = {};
+      dbo.collection("studyspots").find(query).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+        db.close();
+        response.render('spots', {spotList : result})
+    });
+  });
 })
 
 //running
