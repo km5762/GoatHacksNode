@@ -50,8 +50,6 @@ body {
 .starsDiv {
     display: flex;
     align-items: center;
-    flex-direction: row;
-    width: 230px;
     height: 33px;
     margin-bottom: 20px;
 }
@@ -109,4 +107,13 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 2em;
+}
+
+.fixedstar, .emptystar, .halfstar {
+    font-size: 50px;
+    color: #FFD700;
+}
+
+.halfstar {
+    font-family: 'Noto Sans Symbols 2', sans-serif;
 }
