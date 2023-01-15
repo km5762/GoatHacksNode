@@ -5,6 +5,7 @@ const fs = require('fs');
 const ejs = require('ejs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const sharp = require("sharp");
 const multer = require("multer");
 const port = 3000;
 const password = fs.readFileSync("./.env.txt", "utf-8").toString();
@@ -21,43 +22,16 @@ const url = `mongodb+srv://sampleGoat:${password}@cluster0.6vhvr.mongodb.net/?re
 const mongoConfig = { useNewUrlParser: true, useUnifiedTopology: true };
 
 const multerConfig = {
-
-  //specify diskStorage (another option is memory)
-  storage: multer.diskStorage({
-
-    //specify destination
-    destination: function (req, file, next) {
-      next(null, './uploads');
-    },
-
-    //specify the filename to be unique
-    filename: function (req, file, next) {
-      // console.log(file);
-      //get the file mimetype ie 'image/jpeg' split and prefer the second value ie'jpeg'
-      const ext = file.mimetype.split('/')[1];
-      //set the file fieldname to a unique name containing the original name, current datetime and the extension.
-      next(null, file.fieldname + '-' + Date.now() + '.' + ext);
+  limits: {
+    fileSize: 1000000
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|jfif)$/)) {
+      return cb(new Error('Please upload a valid image file'))
     }
-  }),
-
-  // filter out and prevent non-image files.
-  fileFilter: function (req, file, next) {
-    if (!file) {
-      next();
-    }
-
-    // only permit image mimetypes
-    const image = file.mimetype.startsWith('image/');
-    if (image) {
-      console.log('photo uploaded');
-      next(null, true);
-    } else {
-      console.log("file not supported")
-      //TODO:  A better message response to user on failure.
-      return next();
-    }
+    cb(undefined, true)
   }
-};
+}
 
 async function queryAll() {
   const client = new MongoClient(url, mongoConfig);
@@ -72,7 +46,7 @@ async function queryAll() {
     await client.close();
   }
 }
-queryAll().catch(console.dir);
+// queryAll().catch(console.dir);
 
 app.use('/public', express.static('public'));
 
@@ -101,19 +75,21 @@ app.get('/views/spots.ejs', (request, response) => {
   });
 });
 
-app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
+app.post('/upload.html', multer(multerConfig).single("photo"), async (req, res) => {
   const client = new MongoClient(url, mongoConfig);
+  let photoName = `photo-${Date.now()}`;
   try {
     const database = client.db('spotsDB');
     const studyspots = database.collection('studyspots');
-    const filePath = uploadBaseUrl + req.files[0].path.replace(/\\/g, "/");
+    await sharp(req.file.buffer).jpeg().toFile(__dirname + `/uploads/` + photoName);
+    const b64Image = fs.readFileSync(path.join(__dirname + '/uploads/' + photoName)).toString('base64');
 
     const newCollection = {
       location: req.body.location,
       area: req.body.area,
       rating: req.body.rating,
       description: req.body.description,
-      img: filePath
+      img: b64Image
     }
 
     studyspots.insertOne(newCollection)
@@ -121,6 +97,13 @@ app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
 
   } finally {
     await client.close();
+    fs.unlink(__dirname + `/uploads/` + photoName, (err) => {
+      if (err) {
+          throw err;
+      }
+  
+      console.log("Deleted File successfully.");
+  });
   }
 })
 
