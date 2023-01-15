@@ -7,7 +7,7 @@ body {
     background:
         linear-gradient(rgba(0, 0, 0, 0.5),
             rgba(0, 0, 0, 0.5)),
-        url(./imgs/WPI_Beech_Tree.jpg) no-repeat center center fixed;
+        url(../imgs/WPI_Beech_Tree.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -22,7 +22,8 @@ body {
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    background-color: white;
+    background-color: #f5f5f5;
+    filter: drop-shadow(0 0 0.75rem black);
     height: 540px;
     width: 520px;
     position: relative;
