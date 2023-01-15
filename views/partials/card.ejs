@@ -4,10 +4,6 @@
         <span class="areaTag">Area: <span class="bold"><%= spot.area %></span></span>
     </div>
     <div class="starsDiv">
-        <% for (i = 0; i < spot.rating; i++) {%>
-            <img src="/public/imgs/6586099_bookmark_favorite_rating_star_icon.svg" style="margin:2px; width:30px; height:30px">
-        <%}%>
-        <%remainder = spot.rating % 1%>
     </div>
     <div class="textDiv">
         <p class="textEntry"><%= spot.description %></p>
