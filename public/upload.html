@@ -21,15 +21,15 @@
         <form method="post" enctype="multipart/form-data" action="/upload.html"> <!--enctype="multipart/form-data"-->
             <div class="mb-3">
                 <label for="locationSm" class="form-label">Location</label>
-                <input name="location" type="text" class="form-control-sm" id="locationInputSm" aria-describedby="locationLabel" required>
+                <input maxlength="30" name="location" type="text" class="form-control-sm" id="locationInputSm" aria-describedby="locationLabel" required>
             </div>
             <div class="mb-3">
                 <label for="areaSm" class="form-label">Area</label>
-                <input name="area" type="text" class="form-control-sm" id="areaInputSm" aria-describedby="locationLabel" required>
+                <input maxlength="30" name="area" type="text" class="form-control-sm" id="areaInputSm" aria-describedby="locationLabel" required>
             </div>
             <div class="mb-3">
                 <label for="descriptionSm" class="form-label">Description</label>
-                <textarea name="description" class="form-control-sm" id="descriptionSm" rows="3" required></textarea>
+                <textarea maxlength="160" name="description" class="form-control-sm" id="descriptionSm" rows="3" required></textarea>
             </div>
             <div class="mb-3">
                 <label for="ratingSliderSm" class="form-label">Rating from 0 to 5</label>

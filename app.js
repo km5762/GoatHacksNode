@@ -16,48 +16,10 @@ app.use(bodyParser.json());
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
-// connect to mongoosedb
 const uri = `mongodb+srv://sampleGoat:${password}@cluster0.6vhvr.mongodb.net/?retryWrites=true&w=majority`;
 const mongoConfig = { useNewUrlParser: true, useUnifiedTopology: true };
 
-const multerConfig = {
 
-  //specify diskStorage (another option is memory)
-  storage: multer.diskStorage({
-
-    //specify destination
-    destination: function (req, file, next) {
-      next(null, './uploads');
-    },
-
-    //specify the filename to be unique
-    filename: function (req, file, next) {
-      // console.log(file);
-      //get the file mimetype ie 'image/jpeg' split and prefer the second value ie'jpeg'
-      const ext = file.mimetype.split('/')[1];
-      //set the file fieldname to a unique name containing the original name, current datetime and the extension.
-      next(null, file.fieldname + '-' + Date.now() + '.' + ext);
-    }
-  }),
-
-  // filter out and prevent non-image files.
-  fileFilter: function (req, file, next) {
-    if (!file) {
-      next();
-    }
-
-    // only permit image mimetypes
-    const image = file.mimetype.startsWith('image/');
-    if (image) {
-      console.log('photo uploaded');
-      next(null, true);
-    } else {
-      console.log("file not supported")
-      //TODO:  A better message response to user on failure.
-      return next();
-    }
-  }
-};
 
 async function queryAll() {
   const client = new MongoClient(uri, mongoConfig);
@@ -87,10 +49,6 @@ app.get('/upload.html', (request, response) => {
   response.sendFile(__dirname + '/public/upload.html');
 })
 
-app.get('/views/spots.ejs', (request, response) => {
-  res.send('hi');
-})
-
 ///form posting to mongo multerConfig single('photo')
 app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
   const client = new MongoClient(uri, mongoConfig);
@@ -104,21 +62,21 @@ app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
       area: req.body.area,
       rating: req.body.rating,
       description: req.body.description,
-      img: filePath 
+      img: filePath
     }
 
     studyspots.insertOne(newCollection)
     res.redirect('/');
-    
+
   } finally {
     await client.close();
   }
 })
 
-app.get('*', function(req, res){
+app.get('*', function (req, res) {
   res.send('No valid route found', 404);
 });
-//running
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 })
