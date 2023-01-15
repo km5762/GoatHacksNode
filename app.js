@@ -88,7 +88,7 @@ app.post('/upload.html', multer(multerConfig).single("photo"), async (req, res) 
     const newCollection = {
       location: req.body.location,
       area: req.body.area,
-      rating: req.body.rating,
+      rating: req.body.star,
       description: req.body.description,
       img: b64Image
     }
@@ -100,11 +100,22 @@ app.post('/upload.html', multer(multerConfig).single("photo"), async (req, res) 
     await client.close();
     fs.unlink(__dirname + `/uploads/` + photoName, (err) => {
       if (err) {
-          throw err;
+        throw err;
       }
-  
       console.log("Deleted File successfully.");
-  });
+    });
+  }
+})
+
+app.post('/views/spots.ejs', async (req, res) => {
+  let bod = req.body;
+  const client = new MongoClient(url, mongoConfig);
+  try {
+    const database = client.db('spotsDB');
+    const studyspots = database.collection('studyspots');
+  } finally {
+    client.close();
+    res.redirect('/views/spots.ejs')
   }
 })
 
