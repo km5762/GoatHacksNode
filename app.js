@@ -22,7 +22,7 @@ async function queryAll() {
   try {
     const database = client.db('spotsDB');
     const studyspots = database.collection('studyspots');
-    const query = {};
+    const query = { };
     const spot = await studyspots.find(query).toArray();
     console.log(spot);
   } finally {
