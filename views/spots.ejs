@@ -5,13 +5,16 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Spots</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' href='../public/ccc/spots.css'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <script src='/resources/spots.js'></script>
+    <link href= "/public/css/spots.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    <%spotsList.forEach(spot => {%>
+        <p><%= spot.description %></p>
+    <%})%>
     <div class="card">
         <div class="locationDiv">
             <span class="locationTag">Location: </span>
@@ -25,7 +28,7 @@
             <div class="averageStars"></div>
         </div>
         <div class="textDiv">
-            <p class="textEntry">WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW.</p>
+            <p class="textEntry"></p>
         </div>
         <div class="imageDiv">
             <img class="image" src="../public/imgs/WPI_Beech_Tree.jpg">
