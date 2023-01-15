@@ -15,8 +15,8 @@
 
 <body>
     <div class="cardcontainer">
-        <% for (i = 0; i < list.length; i++) {%>
-            <%- include('partials/card', {location : list[i]})%>
+        <% for (i = 0; i < spotList.length; i++) {%>
+            <%- include('partials/card', {spot : spotList[i]})%>
         <%}%>
     </div>
 </body>

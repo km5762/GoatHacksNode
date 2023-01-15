@@ -1,8 +1,7 @@
 <div class="card">
     <div class="locationDiv">
-        <span class="locationTag">Location: <span class="bold"><%= location %></span></span>
-        <span class="areaTag">Area: </span>
-        <span class="AreaEntry"></span>
+        <span class="locationTag">Location: <span class="bold"><%= spot.location %></span></span>
+        <span class="areaTag">Area: <span class="bold"><%= spot.area %></span></span>
     </div>
     <div class="starsDiv">
         <div class="userStars"></div>
@@ -10,9 +9,9 @@
         <div class="averageStars"></div>
     </div>
     <div class="textDiv">
-        <p class="textEntry"></p>
+        <p class="textEntry"><%= spot.description %></p>
     </div>
     <div class="imageDiv">
-        <img class="image" src="../public/imgs/WPI_Beech_Tree.jpg">
+        <img class="image" src=<%= spot.img %>>
     </div>
 </div>

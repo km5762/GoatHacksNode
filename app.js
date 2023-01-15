@@ -88,19 +88,17 @@ app.get('/upload.html', (request, response) => {
 })
 
 app.get('/views/spots.ejs', (request, response) => {
-  // MongoClient.connect(url, (err, db) => {
-  //   if (err) throw err;
-  //   var dbo = db.db("spotsDB");
-  //   var query = {};
-  //   dbo.collection("studyspots").find(query).toArray(function (err, result) {
-  //     if (err) throw err;
-  //     console.log(result);
-  //     db.close();
-  //     response.render('spots', { spotList: result });
-  //   });
-  // });
-  list = [1,2,3,4,5];
-  response.render('spots', {list : list});
+  MongoClient.connect(url, (err, db) => {
+    if (err) throw err;
+    var dbo = db.db("spotsDB");
+    var query = {};
+    dbo.collection("studyspots").find(query).toArray(function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      db.close();
+      response.render('spots', { spotList: result });
+    });
+  });
 });
 
 app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
