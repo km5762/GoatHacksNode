@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -8,13 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="/public/css/spots.css" rel="stylesheet" type="text/css" />
     <script src='/resources/spots.js'></script>
-    <link href= "/public/css/spots.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
     <div class="card">
         <div class="locationDiv">
-            <span class="locationTag">Location: <span class="bold"><%= spotList[0].location %></span></span>
+            <span class="locationTag">Location: <span class="bold">
+                    <%= spotList[0].location %>
+                </span></span>
             <span class="areaTag">Area: </span>
             <span class="AreaEntry"></span>
         </div>
@@ -31,4 +35,5 @@
         </div>
     </div>
 </body>
+
 </html>

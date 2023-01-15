@@ -9,6 +9,7 @@
 html,
 body {
     height: 100%;
+    font-size: 12pt;
 }
 
 body {
@@ -49,4 +50,12 @@ form {
 
     align-items: center;
     justify-content: space-between;
+}
+
+#descriptionSm {
+    resize: none;
+}
+
+#formFileSm {
+    width: 35%;
 }
