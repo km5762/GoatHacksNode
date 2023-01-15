@@ -1,6 +1,7 @@
 * {
     /* border: 2px solid black; */
-    padding: 0%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -98,4 +99,14 @@ body {
     width: inherit;
     height: inherit;
     object-fit: fill;
+}
+
+.cardcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    width: 75%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em;
 }
