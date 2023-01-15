@@ -22,7 +22,7 @@ body {
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    background-color: white;
+    background-color: #f5f5f5;
     height: 540px;
     width: 520px;
     position: relative;
