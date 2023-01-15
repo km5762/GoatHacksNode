@@ -18,7 +18,7 @@
 
 <body>
     <div class="form-wrapper">
-        <form method="post" action="/upload.html"> <!--enctype="multipart/form-data"-->
+        <form method="post" enctype="multipart/form-data" action="/upload.html"> <!--enctype="multipart/form-data"-->
             <div class="mb-3">
                 <label for="locationSm" class="form-label">Location</label>
                 <input name="location" type="text" class="form-control-sm" id="locationInputSm" aria-describedby="locationLabel" required>
@@ -45,7 +45,7 @@
             </div>
             <div class="mb-3">
                 <label for="formFileSm" class="form-label">Upload an Image</label>
-                <input name="image-file" class="form-control form-control-sm" type="file" id="formFileSm" accept="image/jpg,image/jpeg,image/png,image/webp" required>
+                <input name="photo" class="form-control form-control-sm" type="file" id="formFileSm" accept="image/jpg,image/jpeg,image/png,image/webp" required>
             </div>
             <div>
                 <button type="submit" class="btn btn-primary ">Submit</button>

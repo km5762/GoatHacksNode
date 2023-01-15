@@ -6,33 +6,61 @@ const ejs = require('ejs');
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const ImageModel = require("./image.model");
 const port = 3000;
 const password = fs.readFileSync("./.env.txt", "utf-8").toString();
 const { MongoClient } = require("mongodb");
+const uploadBaseUrl = `127.0.0.1:${port}/`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.set('views', './views');
 app.set('view engine', 'ejs');
-
 
 // connect to mongoosedb
 const uri = `mongodb+srv://sampleGoat:${password}@cluster0.6vhvr.mongodb.net/?retryWrites=true&w=majority`;
+const mongoConfig = { useNewUrlParser: true, useUnifiedTopology: true };
 
+const multerConfig = {
 
-const Storage = multer.diskStorage({
-  destination: "uploads",
-  filename: (req, file, cb) => {
-    cb(null, Date.now);
+  //specify diskStorage (another option is memory)
+  storage: multer.diskStorage({
+
+    //specify destination
+    destination: function (req, file, next) {
+      next(null, './uploads');
+    },
+
+    //specify the filename to be unique
+    filename: function (req, file, next) {
+      // console.log(file);
+      //get the file mimetype ie 'image/jpeg' split and prefer the second value ie'jpeg'
+      const ext = file.mimetype.split('/')[1];
+      //set the file fieldname to a unique name containing the original name, current datetime and the extension.
+      next(null, file.fieldname + '-' + Date.now() + '.' + ext);
+    }
+  }),
+
+  // filter out and prevent non-image files.
+  fileFilter: function (req, file, next) {
+    if (!file) {
+      next();
+    }
+
+    // only permit image mimetypes
+    const image = file.mimetype.startsWith('image/');
+    if (image) {
+      console.log('photo uploaded');
+      next(null, true);
+    } else {
+      console.log("file not supported")
+      //TODO:  A better message response to user on failure.
+      return next();
+    }
   }
-});
-
-const upload = multer({
-  storage: Storage
-}).single('testImage');
+};
 
 async function queryAll() {
-  const client = new MongoClient(uri);
+  const client = new MongoClient(uri, mongoConfig);
   try {
     const database = client.db('spotsDB');
     const studyspots = database.collection('studyspots');
@@ -46,17 +74,10 @@ async function queryAll() {
 }
 queryAll().catch(console.dir);
 
-const schema = {
-  location: String,
-  area: String,
-  rating: Number,
-  description: String,
-  img: String
-}
-
-const Spot = mongoose.model("studyspots", schema);
-
 app.use('/public', express.static('public'));
+
+//TODO this serves images to validate
+app.use('/uploads', express.static('uploads'));
 
 app.get('/', (request, response) => {
   response.sendFile(__dirname + '/public/index.html');
@@ -67,56 +88,37 @@ app.get('/upload.html', (request, response) => {
 })
 
 app.get('/views/spots.ejs', (request, response) => {
-  Spot.find({}, function (err, spots) {
-    response.render('spots', {
-      spotsList: spots
-    })
-  })
+  res.send('hi');
 })
 
-///form posting to mongo
-app.post('/upload.html', async (req, res) => {
-  const client = new MongoClient(uri);
+///form posting to mongo multerConfig single('photo')
+app.post('/upload.html', multer(multerConfig).any(), async (req, res) => {
+  const client = new MongoClient(uri, mongoConfig);
   try {
     const database = client.db('spotsDB');
     const studyspots = database.collection('studyspots');
+    const filePath = uploadBaseUrl + req.files[0].path.replace(/\\/g, "/");
 
     const newCollection = {
       location: req.body.location,
       area: req.body.area,
       rating: req.body.rating,
       description: req.body.description,
-      img: "hi"
+      img: filePath 
     }
 
     studyspots.insertOne(newCollection)
     res.redirect('/');
+    
   } finally {
     await client.close();
   }
-
 })
-// app.post('/upload.html', async (req, res) => {
-//   let imageLoc = "HITHEREMYELS";
-//   let newSpot = new Spot({
-//     _id: mongoose.Types.ObjectId(),
-//     location: req.body.location,
-//     area: req.body.area,
-//     rating: req.body.rating, //has to be computed to be average on view
-//     description: req.body.description,
-//     img: imageLoc
-//   });
-//   // console.log(req.body.location);
-//   // console.log(req.body.area);
-//   // console.log(req.body.rating);
-//   // console.log(req.body.description);
 
-//   await newSpot.save().then(console.log("Table updated!"));
-//   res.redirect('/upload.html');
-
-// }) 
-
+app.get('*', function(req, res){
+  res.send('No valid route found', 404);
+});
 //running
-app.listen(port, function () {
+app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 })
