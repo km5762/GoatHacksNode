@@ -1,3 +1,4 @@
+https://youtu.be/pTlkkirqi2M
 ## Inspiration
 Finding a good spot on campus can be hard during peak study times, like midterms or finals. We thought a way to navigate suggestions from others would be useful.
 
