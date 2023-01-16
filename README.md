@@ -1,4 +1,6 @@
-[![Watch me!](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=pTlkkirqi2M)
+## Demo
+[![Watch me!](https://img.youtube.com/vi/pTlkkirqi2M/0.jpg)](https://www.youtube.com/watch?v=pTlkkirqi2M)
+
 ## Inspiration
 Finding a good spot on campus can be hard during peak study times, like midterms or finals. We thought a way to navigate suggestions from others would be useful.
 
