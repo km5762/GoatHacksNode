@@ -15,7 +15,7 @@ We were also going to host this on my website but this turned out to be harder t
 Having a running node project that doesn't look half bad.
 
 ## What we learned
-We don't want to do this for our jobs.
+Full stack development is really hard, even for a simple website.
 
 ## What's next for StudySpot
 * Sorting by new, popular, personal favorites
